@@ -65,7 +65,7 @@ public class Nave4 {
 	        	yVel*=-1;
 	        
 	        spr.setPosition(x+xVel, y+yVel);   
-         
+	        
  		    spr.draw(batch);
         } else {
            spr.setX(spr.getX()+MathUtils.random(-2,2));
