@@ -23,6 +23,7 @@ public class Nave4 {
     private boolean herido = false;
     private int tiempoHeridoMax=50;
     private int tiempoHerido;
+    private int vel = 3;
     
     public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
     	sonidoHerido = soundChoque;
@@ -39,32 +40,19 @@ public class Nave4 {
         float y =  spr.getY();
         if (!herido) {
 	        // que se mueva con teclado
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) xVel--;
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) xVel++;
-        	if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) yVel--;     
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) yVel++;
+	        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) xVel-=vel;
+	        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) xVel+=vel;
+        	if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) yVel-=vel;     
+	        if (Gdx.input.isKeyPressed(Input.Keys.UP)) yVel+=vel;
         	
-	     /*   if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) spr.setRotation(++rotacion);
-	        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) spr.setRotation(--rotacion);
-	        
-	        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-	        	xVel -=Math.sin(Math.toRadians(rotacion));
-	        	yVel +=Math.cos(Math.toRadians(rotacion));
-	        	System.out.println(rotacion+" - "+Math.sin(Math.toRadians(rotacion))+" - "+Math.cos(Math.toRadians(rotacion))) ;    
-	        }
-	        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-	        	xVel +=Math.sin(Math.toRadians(rotacion));
-	        	yVel -=Math.cos(Math.toRadians(rotacion));
-	        	     
-	        }*/
-	        
-	        // que se mantenga dentro de los bordes de la ventana
 	        if (x+xVel < 0 || x+xVel+spr.getWidth() > Gdx.graphics.getWidth())
 	        	xVel*=-1;
 	        if (y+yVel < 0 || y+yVel+spr.getHeight() > Gdx.graphics.getHeight())
 	        	yVel*=-1;
 	        
 	        spr.setPosition(x+xVel, y+yVel);   
+	        xVel = 0;
+	        yVel = 0;
 	        
  		    spr.draw(batch);
         } else {
@@ -74,15 +62,16 @@ public class Nave4 {
  		   tiempoHerido--;
  		   if (tiempoHerido<=0) herido = false;
  		 }
-        // disparo
+        ////////////////////// disparo//////////////////////////////////////////
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {         
-          Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight()-5,0,3,txBala);
+          Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight(),10,0,txBala);
 	      juego.agregarBala(bala);
 	      soundBala.play();
         }
        
     }
       
+    /////////////////////////////////////////////////////////////////////////////////////////////
     public boolean checkCollision(Ball2 b) {
         if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
         	// rebote

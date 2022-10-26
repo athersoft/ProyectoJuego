@@ -8,11 +8,13 @@ import com.badlogic.gdx.math.Rectangle;
 
 
 public class Ball2 {
+	private int hp = 2;
 	private int x;
     private int y;
     private int xSpeed;
     private int ySpeed;
     private Sprite spr;
+    private boolean Destroyed = false;
 
     public Ball2(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
     	spr = new Sprite(tx);
@@ -76,5 +78,15 @@ public class Ball2 {
 		this.ySpeed = ySpeed;
 	}
 	
+	public void reducirVida(int atk) {
+		this.hp -= atk;
+		if(this.hp <= 0) {
+			this.Destroyed = true;
+		}
+	}
+	
+	public boolean isDestroyed() {
+		return Destroyed;
+	}
     
 }

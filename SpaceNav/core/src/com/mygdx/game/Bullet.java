@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class Bullet {
-
+	private int atk = 1;
 	private int xSpeed;
 	private int ySpeed;
 	private boolean destroyed = false;
@@ -19,6 +19,14 @@ public class Bullet {
 	        this.xSpeed = xSpeed;
 	        this.ySpeed = ySpeed;
 	    }
+	    
+	    public Bullet(int atk, float x, float y, int xSpeed, int ySpeed, Texture tx) {
+	    	spr = new Sprite(tx);
+	    	spr.setPosition(x, y);
+	        this.xSpeed = xSpeed;
+	        this.ySpeed = ySpeed;
+	    }
+	    
 	    public void update() {
 	        spr.setPosition(spr.getX()+xSpeed, spr.getY()+ySpeed);
 	        if (spr.getX() < 0 || spr.getX()+spr.getWidth() > Gdx.graphics.getWidth()) {
@@ -43,6 +51,10 @@ public class Bullet {
 	        }
 	        return false;
 	    }
+	    
+	    public int getAtk() {
+			return atk;
+		}
 	    
 	    public boolean isDestroyed() {return destroyed;}
 	

@@ -54,11 +54,12 @@ public class PantallaJuego implements Screen {
 		gameMusic.play();
 		
 	    // cargar imagen de la nave, 64x64   
-	    nave = new Nave4(Gdx.graphics.getWidth()/2-50,30,new Texture(Gdx.files.internal("MainShip3.png")),
+	    nave = new Nave4(10,Gdx.graphics.getHeight()/2-50,new Texture(Gdx.files.internal("MainShip3.png")),
 	    				Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), 
 	    				new Texture(Gdx.files.internal("Rocket2.png")), 
 	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
         nave.setVidas(vidas);
+        
         //crear asteroides
         Random r = new Random();
 	    for (int i = 0; i < cantAsteroides; i++) {
@@ -91,9 +92,14 @@ public class PantallaJuego implements Screen {
 		            for (int j = 0; j < balls1.size(); j++) {    
 		              if (b.checkCollision(balls1.get(j))) {          
 		            	 explosionSound.play();
-		            	 balls1.remove(j);
-		            	 balls2.remove(j);
-		            	 j--;
+		            	 balls1.get(j).reducirVida(b.getAtk());
+		            	 
+		            	 if(balls1.get(j).isDestroyed()) {
+		            		 balls1.remove(j);
+					         balls2.remove(j);
+			            	 j--; 
+		            	 }
+		            	 
 		            	 score +=10;
 		              }   	  
 		  	        }
@@ -105,6 +111,15 @@ public class PantallaJuego implements Screen {
 		            }
 		      }
 		      //actualizar movimiento de asteroides dentro del area
+	    	  for (int j = 0; j < balls1.size(); j++) {    
+	    		  Ball2 b = balls1.get(j);
+	    		  if( b.isDestroyed()) {
+			    		balls1.remove(j);
+			            balls2.remove(j);
+			            j--;
+			    	 }
+	    	  }
+	    	  
 		      for (Ball2 ball : balls1) {
 		          ball.update();
 		      }
