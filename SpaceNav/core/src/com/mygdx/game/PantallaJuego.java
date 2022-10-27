@@ -28,6 +28,7 @@ public class PantallaJuego implements Screen {
 	private int velYAsteroides; 
 	private int cantAsteroides;
 	private int packPrev;
+	private int intervalo = 0;
 	
 	private Nave4 nave;
 	private Nave4 escudo;
@@ -71,25 +72,7 @@ public class PantallaJuego implements Screen {
         
         
         
-        //crear asteroides
-        Random r = new Random();
-	    for (int i = 0; i < cantAsteroides; i++) {
-	        Ball2 bb = new Ball2(Gdx.graphics.getWidth()-100,
-	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-	  	            20+r.nextInt(10), -3, velYAsteroides+r.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("min1.png")));	   
-	  	    balls1.add(bb);
-	  	    balls2.add(bb);
-	  	}
-	    
-	    for (int i = 0; i < packPrev; i++) {
-	        Ball2 bb = new Ball2(r.nextInt((int)Gdx.graphics.getWidth()),
-	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("min1.png")));	   
-	  	    balls1.add(bb);
-	  	    balls2.add(bb);
-	  	}
+        
 	}
     
 	public void dibujaEncabezado() {
@@ -107,6 +90,30 @@ public class PantallaJuego implements Screen {
           batch.draw(backgroundTexture, 0, 0);
 		  dibujaEncabezado();
 	      if (!nave.estaHerido()) {
+	    	//crear asteroides
+	          if(intervalo == 0) {
+	  	        Random r = new Random();
+	  		    for (int i = 0; i < cantAsteroides; i++) {
+	  		        Ball2 bb = new Ball2(Gdx.graphics.getWidth()-100,
+	  		  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
+	  		  	            20+r.nextInt(10), -3, velYAsteroides+r.nextInt(4), 
+	  		  	            new Texture(Gdx.files.internal("min1.png")));	   
+	  		  	    balls1.add(bb);
+	  		  	    balls2.add(bb);
+	  		  	}
+	  		    
+	  		    for (int i = 0; i < packPrev; i++) {
+	  		        Ball2 bb = new Ball2(r.nextInt((int)Gdx.graphics.getWidth()),
+	  		  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
+	  		  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
+	  		  	            new Texture(Gdx.files.internal("min1.png")));	   
+	  		  	    balls1.add(bb);
+	  		  	    balls2.add(bb);
+	  		  	}
+	  		    intervalo = 120;
+	          }else {
+	        	  intervalo--;
+	          }
 		      // colisiones entre balas y asteroides y su destruccion  
 	    	  for (int i = 0; i < balas.size(); i++) {
 		            Bullet b = balas.get(i);
@@ -145,17 +152,10 @@ public class PantallaJuego implements Screen {
 		      for (Ball2 ball : balls1) {
 		          ball.mover();
 		      }
-		      //colisiones entre asteroides y sus rebotes  
-		      for (int i=0;i<balls1.size();i++) {
-		    	Ball2 ball1 = balls1.get(i);   
-		        for (int j=0;j<balls2.size();j++) {
-		          Ball2 ball2 = balls2.get(j); 
-		          if (i<j) {
-		        	  ball1.checkCollision(ball2);
+		      
+		      
+  
 		     
-		          }
-		        }
-		      } 
 	      }
 	      //dibujar balas
 	     for (Bullet b : balas) {       

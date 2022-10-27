@@ -42,22 +42,6 @@ public class Ball2 implements Movimiento {
     	spr.draw(batch);
     }
     
-    public void checkCollision(Ball2 b2) {
-        if(spr.getBoundingRectangle().overlaps(b2.spr.getBoundingRectangle())){
-        	// rebote
-        	
-            if (getXSpeed() ==0) setXSpeed(getXSpeed() + b2.getXSpeed()/2);
-            if (b2.getXSpeed() ==0) b2.setXSpeed(b2.getXSpeed() + getXSpeed()/2);
-        	setXSpeed(- getXSpeed());
-            b2.setXSpeed(-b2.getXSpeed());
-            
-            if (getySpeed() ==0) setySpeed(getySpeed() + b2.getySpeed()/2);
-            if (b2.getySpeed() ==0) b2.setySpeed(b2.getySpeed() + getySpeed()/2);
-            setySpeed(- getySpeed());
-            b2.setySpeed(- b2.getySpeed()); 
-            
-        }
-    }
 	public int getXSpeed() {
 		return xSpeed;
 	}
@@ -87,7 +71,7 @@ public class Ball2 implements Movimiento {
 		x += getXSpeed();
 
         if (x+getXSpeed() < 0 || x+getXSpeed()+spr.getWidth() > Gdx.graphics.getWidth())
-        	setXSpeed(getXSpeed() * -1);
+        	this.Destroyed = true;
         if (y+getySpeed() < 0 || y+getySpeed()+spr.getHeight() > Gdx.graphics.getHeight())
         	setySpeed(getySpeed() * -1);
         spr.setPosition(x, y);
