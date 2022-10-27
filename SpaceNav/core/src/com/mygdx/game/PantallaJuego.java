@@ -30,6 +30,7 @@ public class PantallaJuego implements Screen {
 	private int packPrev;
 	
 	private Nave4 nave;
+	private Nave4 escudo;
 	private  ArrayList<Ball2> balls1 = new ArrayList<>();
 	private  ArrayList<Ball2> balls2 = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
@@ -63,6 +64,12 @@ public class PantallaJuego implements Screen {
 	    				new Texture(Gdx.files.internal("Rocket2.png")), 
 	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
         nave.setVidas(vidas);
+        //Crea el escudo
+        
+        escudo = new Nave4(nave.getX(), nave.getY(), new Texture(Gdx.files.internal("shield.png")), 
+        		Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), new Texture("Rocket2.png"), Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3")));
+        
+        
         
         //crear asteroides
         Random r = new Random();
@@ -70,7 +77,7 @@ public class PantallaJuego implements Screen {
 	        Ball2 bb = new Ball2(r.nextInt((int)Gdx.graphics.getWidth()),
 	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
 	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("aGreyMedium4.png")));	   
+	  	            new Texture(Gdx.files.internal("min1.png")));	   
 	  	    balls1.add(bb);
 	  	    balls2.add(bb);
 	  	}
@@ -79,7 +86,7 @@ public class PantallaJuego implements Screen {
 	        Ball2 bb = new Ball2(r.nextInt((int)Gdx.graphics.getWidth()),
 	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
 	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("aGreyMedium4.png")));	   
+	  	            new Texture(Gdx.files.internal("min1.png")));	   
 	  	    balls1.add(bb);
 	  	    balls2.add(bb);
 	  	}
@@ -155,6 +162,7 @@ public class PantallaJuego implements Screen {
 	          b.draw(batch);
 	      }
 	      nave.draw(batch, this);
+	      escudo.draw(batch, this);
 	      //dibujar asteroides y manejar colision con nave
 	      for (int i = 0; i < balls1.size(); i++) {
 	    	    Ball2 b=balls1.get(i);
