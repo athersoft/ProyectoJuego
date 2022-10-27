@@ -74,9 +74,9 @@ public class PantallaJuego implements Screen {
         //crear asteroides
         Random r = new Random();
 	    for (int i = 0; i < cantAsteroides; i++) {
-	        Ball2 bb = new Ball2(r.nextInt((int)Gdx.graphics.getWidth()),
+	        Ball2 bb = new Ball2(Gdx.graphics.getWidth()-100,
 	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
+	  	            20+r.nextInt(10), -3, velYAsteroides+r.nextInt(4), 
 	  	            new Texture(Gdx.files.internal("min1.png")));	   
 	  	    balls1.add(bb);
 	  	    balls2.add(bb);
@@ -143,7 +143,7 @@ public class PantallaJuego implements Screen {
 	    	  }
 	    	  
 		      for (Ball2 ball : balls1) {
-		          ball.update();
+		          ball.mover();
 		      }
 		      //colisiones entre asteroides y sus rebotes  
 		      for (int i=0;i<balls1.size();i++) {

@@ -24,6 +24,8 @@ public class Nave4 {
     private int tiempoHeridoMax=50;
     private int tiempoHerido;
     private int vel = 3;
+    private Arma arma;
+    
     
     public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
     	sonidoHerido = soundChoque;
@@ -33,7 +35,8 @@ public class Nave4 {
     	spr.setPosition(x, y);
     	//spr.setOriginCenter();
     	spr.setBounds(x, y, 45, 45);
-
+    	arma = new Arma2(1);
+    	
     }
     public void draw(SpriteBatch batch, PantallaJuego juego){
         float x =  spr.getX();
@@ -64,8 +67,9 @@ public class Nave4 {
  		 }
         ////////////////////// disparo//////////////////////////////////////////
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {         
-          Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight(),10,0,txBala);
-	      juego.agregarBala(bala);
+          //Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight(),10,0,txBala);
+          arma.disparo(spr.getX(), spr.getY() + 16, juego);
+	      //juego.agregarBala(bala);
 	      soundBala.play();
         }
        
