@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 public class PantallaJuego implements Screen {
@@ -18,6 +19,7 @@ public class PantallaJuego implements Screen {
 	private SpaceNavigation game;
 	private OrthographicCamera camera;	
 	private SpriteBatch batch;
+	private TextureRegion backgroundTexture;
 	private Sound explosionSound;
 	private Music gameMusic;
 	private int score;
@@ -25,6 +27,7 @@ public class PantallaJuego implements Screen {
 	private int velXAsteroides; 
 	private int velYAsteroides; 
 	private int cantAsteroides;
+	private int packPrev;
 	
 	private Nave4 nave;
 	private  ArrayList<Ball2> balls1 = new ArrayList<>();
@@ -45,9 +48,10 @@ public class PantallaJuego implements Screen {
 		camera = new OrthographicCamera();	
 		camera.setToOrtho(false, 800, 640);
 		//inicializar assets; musica de fondo y efectos de sonido
-		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
-		explosionSound.setVolume(1,0.5f);
-		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav")); //
+		backgroundTexture = new TextureRegion(new Texture(Gdx.files.internal("2background (1).jpg")), 0, 0, 1200,800);
+		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explot.ogg"));
+		explosionSound.setVolume(1,0.05f);
+		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("Torero.wav")); //
 		
 		gameMusic.setLooping(true);
 		gameMusic.setVolume(0.5f);
@@ -70,6 +74,15 @@ public class PantallaJuego implements Screen {
 	  	    balls1.add(bb);
 	  	    balls2.add(bb);
 	  	}
+	    
+	    for (int i = 0; i < packPrev; i++) {
+	        Ball2 bb = new Ball2(r.nextInt((int)Gdx.graphics.getWidth()),
+	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
+	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
+	  	            new Texture(Gdx.files.internal("aGreyMedium4.png")));	   
+	  	    balls1.add(bb);
+	  	    balls2.add(bb);
+	  	}
 	}
     
 	public void dibujaEncabezado() {
@@ -83,6 +96,8 @@ public class PantallaJuego implements Screen {
 	public void render(float delta) {
 		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
           batch.begin();
+          
+          batch.draw(backgroundTexture, 0, 0);
 		  dibujaEncabezado();
 	      if (!nave.estaHerido()) {
 		      // colisiones entre balas y asteroides y su destruccion  
