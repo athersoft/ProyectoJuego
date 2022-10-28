@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.MathUtils;
 public class Nave4 {
 	
 	private boolean destruida = false;
+	private boolean escudo = false;
     private int vidas = 3;
     private float xVel = 0;
     private float yVel = 0;
@@ -24,8 +25,6 @@ public class Nave4 {
     private int tiempoHeridoMax=50;
     private int tiempoHerido;
     private int vel = 3;
-    private Arma arma;
-    
     
     public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
     	sonidoHerido = soundChoque;
@@ -35,8 +34,10 @@ public class Nave4 {
     	spr.setPosition(x, y);
     	//spr.setOriginCenter();
     	spr.setBounds(x, y, 45, 45);
-    	arma = new Arma2(1);
-    	
+
+    }
+    public boolean getShield() {
+    	return this.escudo;
     }
     public void draw(SpriteBatch batch, PantallaJuego juego){
         float x =  spr.getX();
@@ -67,17 +68,22 @@ public class Nave4 {
  		 }
         ////////////////////// disparo//////////////////////////////////////////
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {         
-          //Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight(),10,0,txBala);
-          arma.disparo(spr.getX(), spr.getY() + 16, juego);
-	      //juego.agregarBala(bala);
+          Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight(),10,0,txBala);
+	      juego.agregarBala(bala);
 	      soundBala.play();
         }
        
     }
+    
+    public void changeShield() {
+    	escudo = false;
+    }
       
     /////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean checkCollision(Ball2 b) {
-        if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
+    public boolean checkCollisionEnemy(Enemy b) {
+    	
+
+        if(!herido && b.getArea().overlaps(spr.getBoundingRectangle()) && escudo == false){
         	// rebote
             if (xVel ==0) xVel += b.getXSpeed()/2;
             if (b.getXSpeed() ==0) b.setXSpeed(b.getXSpeed() + (int)xVel/2);
@@ -102,8 +108,40 @@ public class Nave4 {
           	    destruida = true; 
             return true;
         }
+        escudo = false;
         return false;
     }
+    public boolean checkCollisionpack(paqueteAyuda b) {
+    	
+
+        if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
+        	// rebote
+            if (xVel ==0) xVel += b.getXSpeed()/2;
+            if (b.getXSpeed() ==0) b.setXSpeed(b.getXSpeed() + (int)xVel/2);
+            xVel = - xVel;
+            b.setXSpeed(-b.getXSpeed());
+            
+            if (yVel ==0) yVel += b.getySpeed()/2;
+            if (b.getySpeed() ==0) b.setySpeed(b.getySpeed() + (int)yVel/2);
+            yVel = - yVel;
+            b.setySpeed(- b.getySpeed());
+            // despegar sprites
+      /*      int cont = 0;
+            while (b.getArea().overlaps(spr.getBoundingRectangle()) && cont<xVel) {
+               spr.setX(spr.getX()+Math.signum(xVel));
+            }   */
+        	//actualizar vidas y herir
+            escudo = true;
+            herido = false;
+  		    tiempoHerido=tiempoHeridoMax;
+  		    sonidoHerido.play(); //Cambiar por upgrade
+            if (vidas<=0) 
+          	    destruida = false; 
+            return true;
+        }
+        return false;
+    }
+	
     
     public boolean estaDestruido() {
        return !herido && destruida;
