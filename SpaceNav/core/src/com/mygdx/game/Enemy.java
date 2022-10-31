@@ -62,6 +62,30 @@ public class Enemy implements Movimiento {
 		}
 	}
 	
+	public Sprite getSpr() {
+		return spr;
+	}
+	
+	public void changeX(int x) {
+		this.x += x;
+	}
+	
+	public void changeY(int y) {
+		this.y += y;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public void Destroy() {
+		Destroyed = true;
+	}
+	
 	public boolean isDestroyed() {
 		return Destroyed;
 	}

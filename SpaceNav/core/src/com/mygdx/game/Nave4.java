@@ -73,6 +73,16 @@ public class Nave4 {
         	arma.disparo(spr.getX(), spr.getY() + 16, juego);
         	soundBala.play();
         }
+        
+        /////////////////Cambio de arma//////////////////
+        
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {  
+        	arma = new Arma2(1);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.X)) {  
+        	arma = new Arma1(1);
+        }
+        
        
     }
     

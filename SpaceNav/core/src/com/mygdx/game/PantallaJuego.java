@@ -77,28 +77,9 @@ public class PantallaJuego implements Screen {
         
         
         
-        //crear asteroides
-        
+                
         Random r = new Random();
-        /*
-	    for (int i = 0; i < cantAsteroides; i++) {
-	        Enemy bb = new Enemy(r.nextInt((int)Gdx.graphics.getWidth()),
-	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("min1.png")));	   
-	  	    balls1.add(bb);
-	  	    balls2.add(bb);
-	  	}
-	    
-	    for (int i = 0; i < packPrev; i++) {
-	        Enemy bb = new Enemy(r.nextInt((int)Gdx.graphics.getWidth()),
-	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("min1.png")));	   
-	  	    balls1.add(bb);
-	  	    balls2.add(bb);
-	  	}
-	    */
+
 	    for( int i = 0; i < gluon; i++ ) {
 	    	paqueteAyuda sh = new paqueteAyuda(r.nextInt((int)Gdx.graphics.getWidth()),
 	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
@@ -127,11 +108,20 @@ public class PantallaJuego implements Screen {
 	    	//crear asteroides
 	          if(intervalo == 0) {
 	  	        Random r = new Random();
-	  		    for (int i = 0; i < cantAsteroides; i++) {
-	  		        Enemy bb = new Enemy(Gdx.graphics.getWidth()-100,
+	  		    for (int i = 0; i < cantAsteroides/2; i++) {
+	  		        Enemy bb = new Enemy(Gdx.graphics.getWidth()-100+r.nextInt(140),
 	  		  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
 	  		  	            20+r.nextInt(10), -3, velYAsteroides+r.nextInt(4), 
 	  		  	            new Texture(Gdx.files.internal("min1.png")));	   
+	  		  	    balls1.add(bb);
+	  		  	    balls2.add(bb);
+	  		  	}
+	  		    
+	  		  for (int i = 0; i < cantAsteroides/2; i++) {
+	  		        Enemy bb = new Enemy2(Gdx.graphics.getWidth()-100+r.nextInt(140),
+	  		  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
+	  		  	            20+r.nextInt(10), -3, velYAsteroides+r.nextInt(4), 
+	  		  	            new Texture(Gdx.files.internal("enemy2.png")));	   
 	  		  	    balls1.add(bb);
 	  		  	    balls2.add(bb);
 	  		  	}
@@ -144,7 +134,7 @@ public class PantallaJuego implements Screen {
 	  		  	    balls1.add(bb);
 	  		  	    balls2.add(bb);
 	  		  	}
-	  		    intervalo = 120;
+	  		    intervalo = 180;
 	          }else {
 	        	  intervalo--;
 	          }
