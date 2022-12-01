@@ -30,6 +30,7 @@ public class PantallaJuego implements Screen {
 	private int packPrev;
 	private int gluon = 1;
 	private int intervalo = 0;
+	private int xFondo = 0;
 	
 	private Nave4 nave;
 	private Escudo escudo;
@@ -38,6 +39,7 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<Enemy> balls2 = new ArrayList<>();
 	private  ArrayList<paqueteAyuda> paque = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
+	
 
 
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
@@ -100,7 +102,12 @@ public class PantallaJuego implements Screen {
 	public void render(float delta) {
 		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
           batch.begin();
-          batch.draw(backgroundTexture, 0, 0);
+          batch.draw(backgroundTexture, xFondo, 0);
+          batch.draw(backgroundTexture, xFondo+1200, 0);
+          xFondo--;
+          if(xFondo <= -1200) {
+        	  xFondo = 0;
+          }
           
 		  dibujaEncabezado();
 	      if (!nave.estaHerido()) {
