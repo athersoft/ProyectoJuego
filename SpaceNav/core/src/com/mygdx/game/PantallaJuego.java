@@ -34,7 +34,6 @@ public class PantallaJuego implements Screen {
 	
 	private Nave4 nave;
 	private Escudo escudo;
-	private TextureRegion bar;
 	private  ArrayList<IA> enemy1 = new ArrayList<>();
 	private  ArrayList<IA> enemy2 = new ArrayList<>();
 	private  ArrayList<paqueteAyuda> paque = new ArrayList<>();
@@ -64,14 +63,13 @@ public class PantallaJuego implements Screen {
 		gameMusic.setVolume(0.5f);
 		gameMusic.play();
 		
-	    // cargar imagen de la nave, 64x64   
+	    // cargar imagen de la nave,   
 	    nave = new Nave4(10,Gdx.graphics.getHeight()/2-50,new Texture(Gdx.files.internal("MainShip3.png")),
 	    				Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), 
 	    				new Texture(Gdx.files.internal("Rocket2.png")), 
 	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
         nave.setVidas(vidas);
         
-        bar = new TextureRegion(new Texture(Gdx.files.internal("1background.jpg")), 270, 0, 1200, 2133);
        //Crea el escudo
         
         escudo = new Escudo(nave.getX(), nave.getY(), new Texture(Gdx.files.internal("shield.png")), 
