@@ -38,6 +38,8 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<IA> enemy2 = new ArrayList<>();
 	private  ArrayList<paqueteAyuda> paque = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
+	private  ArrayList<Bullet> balasEnemigas = new ArrayList<>();
+	
 	private EnemyFactory factory = new Nivel1(15);
 
 
@@ -120,7 +122,6 @@ public class PantallaJuego implements Screen {
 	  	    	enemy2.add(e);
   		    }
   		    
-  		
 	            	  
 		      // colisiones entre balas y asteroides y su destruccion  
 	    	  for (int i = 0; i < balas.size(); i++) {
@@ -146,6 +147,12 @@ public class PantallaJuego implements Screen {
 		                i--; //para no saltarse 1 tras eliminar del arraylist
 		            }
 		      }
+	    	  
+	    	  for (int i = 0; i < balasEnemigas.size(); i++) {
+	    		  Bullet b = balasEnemigas.get(i);
+		          b.update();
+	    	  }
+	    	  
 		      //actualizar movimiento de asteroides dentro del area
 	    	  for (int j = 0; j < enemy1.size(); j++) {    
 	    		  IA b = enemy1.get(j);
@@ -158,7 +165,7 @@ public class PantallaJuego implements Screen {
 	    	  
 	    	/////LLamado a IA de los enemigos////////////
 		      for (IA ball : enemy1) {
-		          ball.actuar();
+		          ball.actuar(nave.getX(),nave.getY(),this);		          
 		      }
 		      
 	      }
@@ -167,6 +174,9 @@ public class PantallaJuego implements Screen {
 	          b.draw(batch);
 	      }
 	     for (paqueteAyuda p: paque) {
+	    	 p.draw(batch);
+	     }
+	     for (Bullet p: balasEnemigas) {
 	    	 p.draw(batch);
 	     }
 	      nave.draw(batch, this);
@@ -225,6 +235,10 @@ public class PantallaJuego implements Screen {
     
     public boolean agregarBala(Bullet bb) {
     	return balas.add(bb);
+    }
+    
+    public boolean agregarBalaEnemiga(Bullet bb) {
+    	return balasEnemigas.add(bb);
     }
 	
 	@Override

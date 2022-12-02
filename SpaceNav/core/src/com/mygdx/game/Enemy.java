@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-
+import java.util.Random;
 
 public class Enemy extends IA {
+	Random r = new Random();
+	private int intervaloAtaque = 100+r.nextInt(50);
 	
 	public Enemy(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
 		super(x,y,size,xSpeed,ySpeed,tx);
@@ -25,8 +27,14 @@ public class Enemy extends IA {
 		
 	}
 	
-	public void ataque() {
-		//No ataca
+	public void ataque(int x, int y, PantallaJuego juego) {
+		if(intervaloAtaque == 0) {
+			Bullet b = new Bullet(this.x,this.y,-6,0,new Texture(Gdx.files.internal("Rocket2.png")));
+			intervaloAtaque = 100+r.nextInt(50);;
+			juego.agregarBalaEnemiga(b);
+		}else {
+			intervaloAtaque--;
+		}
 	}
     
 }

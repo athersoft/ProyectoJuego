@@ -26,7 +26,7 @@ public class Nivel1 implements EnemyFactory{
 		if(intervalo == 0) {
 			IA bb = new Enemy(Gdx.graphics.getWidth()-100+r.nextInt(140),
 		  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-		  	            20+r.nextInt(10), -3, 2, 
+		  	            20+r.nextInt(10), -2, 2, 
 		  	            new Texture(Gdx.files.internal("min1.png")));	   
 
 	  	    
