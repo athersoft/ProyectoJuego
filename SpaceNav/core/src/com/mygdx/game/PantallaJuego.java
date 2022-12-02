@@ -38,7 +38,7 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<IA> enemy2 = new ArrayList<>();
 	private  ArrayList<paqueteAyuda> paque = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
-	
+	private EnemyFactory factory = new Nivel1(15);
 
 
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
@@ -98,8 +98,11 @@ public class PantallaJuego implements Screen {
 	}
 	@Override
 	public void render(float delta) {
+		
 		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
           batch.begin();
+          
+        //Movimiento del fondo
           batch.draw(backgroundTexture, xFondo, 0);
           batch.draw(backgroundTexture, xFondo+1200, 0);
           xFondo--;
@@ -110,40 +113,15 @@ public class PantallaJuego implements Screen {
 		  dibujaEncabezado();
 	      if (!nave.estaHerido()) {
 	    	  
-	    	//crear asteroides
-	          if(intervalo == 0) {
-	  	        Random r = new Random();
-	  		    for (int i = 0; i < cantAsteroides/2; i++) {
-	  		        Enemy bb = new Enemy(Gdx.graphics.getWidth()-100+r.nextInt(140),
-	  		  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-	  		  	            20+r.nextInt(10), -3, velYAsteroides+r.nextInt(4), 
-	  		  	            new Texture(Gdx.files.internal("min1.png")));	   
-	  		  	    enemy1.add(bb);
-	  		  	    enemy2.add(bb);
-	  		  	}
-	  		    
-	  		  for (int i = 0; i < cantAsteroides/2; i++) {
-	  		        IA bb = new Enemy2(Gdx.graphics.getWidth()-100+r.nextInt(140),
-	  		  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-	  		  	            20+r.nextInt(10), -3, velYAsteroides+r.nextInt(4), 
-	  		  	            new Texture(Gdx.files.internal("enemy2.png")));	   
-	  		  	    enemy1.add(bb);
-	  		  	    enemy2.add(bb);
-	  		  	}
-	  		    
-	  		    for (int i = 0; i < packPrev; i++) {
-	  		    	Enemy bb = new Enemy(r.nextInt((int)Gdx.graphics.getWidth()),
-	  		  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-	  		  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
-	  		  	            new Texture(Gdx.files.internal("min1.png")));	   
-	  		  	    enemy1.add(bb);
-	  		  	    enemy2.add(bb);
-	  		  	}
-	  		    intervalo = 180;
-	          }else {
-	        	  intervalo--;
-	          }
-	    	  
+	    	 //Creat enemigo
+  		    IA e = factory.createEnemy(enemy1,enemy2);
+  		    if(e != null) {
+  		    	enemy1.add(e);
+	  	    	enemy2.add(e);
+  		    }
+  		    
+  		
+	            	  
 		      // colisiones entre balas y asteroides y su destruccion  
 	    	  for (int i = 0; i < balas.size(); i++) {
 		            Bullet b = balas.get(i);
@@ -204,12 +182,6 @@ public class PantallaJuego implements Screen {
 	    	    IA b = enemy1.get(i);
 	    	    
 	    	    b.draw(batch);
-	    	    /*try {
-                    Thread.sleep(2000);
-                }
-                catch(InterruptedException ie){
-                    ie.printStackTrace();
-                }*/
 		          //perdió vida o game over
 	    	    if(nave.getShield() == false) {
 	    	    	if (nave.checkCollisionEnemy(b)) {
@@ -243,12 +215,15 @@ public class PantallaJuego implements Screen {
   		  }
 	      batch.end();
 	      //nivel completado
-	      if (enemy1.size()==0) {
+	      if (score == 100) {
+	    	  factory = new Nivel2(10);
+	    	  /*
 			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
 					velXAsteroides+3, velYAsteroides+3, cantAsteroides+10);
 			ss.resize(1200, 800);
 			game.setScreen(ss);
 			dispose();
+			*/
 		  }
 	    	 
 	}
