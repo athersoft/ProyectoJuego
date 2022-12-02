@@ -31,7 +31,7 @@ public class Enemy2 extends IA{
         getSpr().setPosition(getX(), getY());
 	}
 	
-	public void ataque() {
+	public void ataque(int x, int y, PantallaJuego juego) {
 		///Sin ataque
 	}
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 
 public class Bullet {
@@ -55,6 +56,10 @@ public class Bullet {
 	    public int getAtk() {
 			return atk;
 		}
+	    
+	    public Rectangle getArea() {
+	    	return spr.getBoundingRectangle();
+	    }
 	    
 	    public boolean isDestroyed() {return destroyed;}
 	

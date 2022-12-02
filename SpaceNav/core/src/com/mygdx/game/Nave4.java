@@ -105,11 +105,7 @@ public class Nave4 {
             if (b.getySpeed() ==0) b.setySpeed(b.getySpeed() + (int)yVel/2);
             yVel = - yVel;
             b.setySpeed(- b.getySpeed());
-            // despegar sprites
-      /*      int cont = 0;
-            while (b.getArea().overlaps(spr.getBoundingRectangle()) && cont<xVel) {
-               spr.setX(spr.getX()+Math.signum(xVel));
-            }   */
+
         	//actualizar vidas y herir
             vidas--;
             herido = true;
@@ -122,6 +118,23 @@ public class Nave4 {
         escudo = false;
         return false;
     }
+    
+    public boolean checkCollisionBullet(Bullet b) {
+    	if(!herido && b.getArea().overlaps(spr.getBoundingRectangle()) && escudo == false){
+        	// rebote
+    		
+            vidas--;
+            herido = true;
+  		    sonidoHerido.play();
+            if (vidas<=0) 
+          	    destruida = true; 
+            return true;
+        }
+        escudo = false;
+        return false;
+    }
+    
+    
     public boolean checkCollisionpack(paqueteAyuda b) {
     	
 

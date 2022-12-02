@@ -91,12 +91,12 @@ public abstract class IA {
 		}
 		
 		public abstract void mover();
-		public abstract void ataque();
+		public abstract void ataque(int x, int y, PantallaJuego juego);
 		
 		////////////////template method/////////////////
-		public void actuar() {
+		public void actuar(int x, int y, PantallaJuego juego) {
 			mover();
-			ataque();
+			ataque(x,y,juego);
 		}
 		
 		
