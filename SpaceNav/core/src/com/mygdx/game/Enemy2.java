@@ -3,12 +3,12 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-public class Enemy2 extends Enemy{
+public class Enemy2 extends IA{
 	private int yy = 0;
 	private int dirY = 1;
 	
 	public Enemy2(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
-		super(x, y, size, xSpeed, ySpeed, tx);
+		super(x,y,size,xSpeed,ySpeed,tx);
 
 	}
 	
@@ -27,6 +27,10 @@ public class Enemy2 extends Enemy{
         if (getY()+getySpeed() < 0 || getY()+getySpeed()+getSpr().getHeight() > Gdx.graphics.getHeight())
         	setySpeed(getySpeed() * -1);
         getSpr().setPosition(getX(), getY());
+	}
+	
+	public void ataque() {
+		///Sin ataque
 	}
 
 }

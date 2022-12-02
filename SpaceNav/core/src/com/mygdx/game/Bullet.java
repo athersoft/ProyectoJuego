@@ -42,7 +42,7 @@ public class Bullet {
 	    	spr.draw(batch);
 	    }
 	    
-	    public boolean checkCollision(Enemy b2) {
+	    public boolean checkCollision(IA b2) {
 	        if(spr.getBoundingRectangle().overlaps(b2.getArea())){
 	        	// Se destruyen ambos
 	            this.destroyed = true;

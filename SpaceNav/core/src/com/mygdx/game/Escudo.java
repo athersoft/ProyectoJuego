@@ -51,7 +51,7 @@ public class Escudo {
     }
    
     /////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean checkCollision(Enemy b) {
+    public boolean checkCollision(IA b) {
         if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
         	// rebote
             if (xVel ==0) xVel += b.getXSpeed()/2;

@@ -91,7 +91,7 @@ public class Nave4 {
     }
       
     /////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean checkCollisionEnemy(Enemy b) {
+    public boolean checkCollisionEnemy(IA b) {
     	
 
         if(!herido && b.getArea().overlaps(spr.getBoundingRectangle()) && escudo == false){
