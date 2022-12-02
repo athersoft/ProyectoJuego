@@ -188,6 +188,32 @@ public class PantallaJuego implements Screen {
 	      if(!paque.isEmpty()) {
 	    	   p = paque.get(0);
 	      }
+	      
+	      
+	      
+	      //Colision entre balas y jugdor
+	      for (int i = 0; i < balasEnemigas.size(); i++) {
+	    	  Bullet b = balasEnemigas.get(i);
+	    	  if(nave.getShield() == false) {
+	    	    	if (nave.checkCollisionBullet(b)) {
+		            //asteroide se destruye con el choque             
+	            	 balasEnemigas.remove(i);
+	            	 i--;
+	    	    	}else {
+		            	  if(p != null && nave.checkCollisionpack(p) && paque.isEmpty() == false) {
+		            		  paque.remove(0);
+		            		  i--;
+		            	  }
+	                }
+	    	    }else {
+	    	    	balasEnemigas.remove(i);
+    	    		i--;
+    	    		nave.changeShield();	
+	    	    } 
+	      }
+	      
+	      
+	      
 	      for (int i = 0; i < enemy1.size(); i++) {
 	    	    IA b = enemy1.get(i);
 	    	    
