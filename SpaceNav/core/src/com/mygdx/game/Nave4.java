@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 
 
 
@@ -64,7 +65,7 @@ public class Nave4 {
         } else {
            spr.setX(spr.getX()+MathUtils.random(-2,2));
  		   spr.draw(batch); 
- 		  spr.setX(x);
+ 		   spr.setX(x);
  		   tiempoHerido--;
  		   if (tiempoHerido<=0) herido = false;
  		 }
@@ -89,7 +90,9 @@ public class Nave4 {
     public void changeShield() {
     	escudo = false;
     }
-      
+    public Rectangle getArea() {
+    	return spr.getBoundingRectangle();
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////
     public boolean checkCollisionEnemy(IA b) {
     	

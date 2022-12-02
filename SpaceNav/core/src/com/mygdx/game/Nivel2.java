@@ -45,5 +45,12 @@ public class Nivel2 implements EnemyFactory{
 		Nivel2 n = new Nivel2(10);
 		return n;
 	}
+
+
+	@Override
+	public IA createEnemy(ArrayList<IA> enemy1, ArrayList<IA> enemy2, ArrayList<IA> enemy3) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

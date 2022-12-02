@@ -34,10 +34,11 @@ public class PantallaJuego implements Screen {
 	
 	private Nave4 nave;
 	private Escudo escudo;
-	private  ArrayList<IA> enemy1 = new ArrayList<>();
-	private  ArrayList<IA> enemy2 = new ArrayList<>();
-	private  ArrayList<paqueteAyuda> paque = new ArrayList<>();
-	private  ArrayList<Bullet> balas = new ArrayList<>();
+	private ArrayList<IA> enemy1 = new ArrayList<>();
+	private ArrayList<IA> enemy2 = new ArrayList<>();
+	private ArrayList<IA> enemy3 = new ArrayList<>();
+	private ArrayList<paqueteAyuda> paque = new ArrayList<>();
+	private ArrayList<Bullet> balas = new ArrayList<>();
 	private EnemyFactory factory = new Nivel1(15);
 
 
@@ -114,10 +115,11 @@ public class PantallaJuego implements Screen {
 	      if (!nave.estaHerido()) {
 	    	  
 	    	 //Creat enemigo
-  		    IA e = factory.createEnemy(enemy1,enemy2);
+  		    IA e = factory.createEnemy(enemy1,enemy2,enemy3);
   		    if(e != null) {
   		    	enemy1.add(e);
 	  	    	enemy2.add(e);
+	  	    	enemy3.add(e);
   		    }
   		    
   		
@@ -152,6 +154,7 @@ public class PantallaJuego implements Screen {
 	    		  if( b.isDestroyed()) {
 			    		enemy1.remove(j);
 			            enemy2.remove(j);
+			            enemy3.remove(j);
 			            j--;
 			    	 }
 	    	  }
