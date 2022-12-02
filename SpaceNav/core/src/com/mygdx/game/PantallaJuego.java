@@ -214,16 +214,11 @@ public class PantallaJuego implements Screen {
   			dispose();
   		  }
 	      batch.end();
-	      //nivel completado
-	      if (score == 100) {
-	    	  factory = new Nivel2(10);
-	    	  /*
-			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
-					velXAsteroides+3, velYAsteroides+3, cantAsteroides+10);
-			ss.resize(1200, 800);
-			game.setScreen(ss);
-			dispose();
-			*/
+	      
+	      //Cambio de nivel
+	      if (score == 200) {
+	    	  factory = factory.nextLevel();
+
 		  }
 	    	 
 	}

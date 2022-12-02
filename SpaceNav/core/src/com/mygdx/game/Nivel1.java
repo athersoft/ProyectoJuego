@@ -41,6 +41,9 @@ public class Nivel1 implements EnemyFactory{
 		}
 	}
 	
-	
+	public EnemyFactory nextLevel() {
+		Nivel2 n = new Nivel2(10);
+		return n;
+	}
 	
 }

@@ -1,5 +1,5 @@
 package com.mygdx.game;
-
+import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -9,15 +9,17 @@ public class Enemy2 extends IA{
 	
 	public Enemy2(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
 		super(x,y,size,xSpeed,ySpeed,tx);
+		Random r = new Random();
+		dirY = 1*(r.nextBoolean() ? 1 : -1 );
 
 	}
 	
 	public void mover() {
 		changeX(getXSpeed());
-		if(getY() > 700) {
+		if(getY() > 750) {
 			dirY = -1;
 		}
-		if(getY() < 100) {
+		if(getY() < 0) {
 			dirY = 1;
 		}
 		changeY(4*dirY);
