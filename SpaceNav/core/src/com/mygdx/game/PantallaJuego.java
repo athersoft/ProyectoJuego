@@ -26,6 +26,7 @@ public class PantallaJuego implements Screen {
 	private int progress;
 	private int ronda;
 	private int xFondo = 0;
+	private Escudo escudo;
 	
 	private Nave4 nave;
 	
@@ -44,9 +45,9 @@ public class PantallaJuego implements Screen {
 		camera.setToOrtho(false, 800, 640);
 		//inicializar assets; musica de fondo y efectos de sonido
 		backgroundTexture = new TextureRegion(new Texture(Gdx.files.internal("2background (1).jpg")), 0, 0, 1200,800);
-		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explot.ogg"));
+		explosionSound = Gdx.audio.newSound(Gdx.files.internal("Damage.mp3"));
 		explosionSound.setVolume(1,0.05f);
-		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("Torero.wav")); //
+		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("Torero.mp3")); //
 		
 		gameMusic.setLooping(true);
 		gameMusic.setVolume(0.5f);
@@ -54,10 +55,13 @@ public class PantallaJuego implements Screen {
 		
 	    // cargar imagen de la nave,   
 	    nave = new Nave4(10,Gdx.graphics.getHeight()/2-50,new Texture(Gdx.files.internal("MainShip3.png")),
-	    				Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), 
+	    				Gdx.audio.newSound(Gdx.files.internal("Damage.mp3")), 
 	    				new Texture(Gdx.files.internal("Rocket2.png")), 
-	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
+	    				Gdx.audio.newSound(Gdx.files.internal("shoot.mp3"))); 
         nave.setVidas(vidas);
+        
+        escudo = new Escudo(nave.getX(), nave.getY(), new Texture(Gdx.files.internal("shield.png")), 
+        		Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")));
         
         
 	}
@@ -91,7 +95,7 @@ public class PantallaJuego implements Screen {
 	    	  instancias.addEnemy(factory.createEnemy());
   		                	  
 		      // colisiones entre balas y asteroides y su destruccion  
-	    	  int a = instancias.colBalaEnemigo();
+	    	  int a = instancias.colBalaEnemigo(explosionSound);
 	    	  progress += a;
 	    	  score+= a;
 	    	  
@@ -106,8 +110,10 @@ public class PantallaJuego implements Screen {
 	      instancias.dibujar(batch);
 	      nave.draw(batch, this);
 	      
+	      nave = instancias.colNavePaq(nave);
+	      
 	      if(nave.getShield()) {
-	    	  instancias.drawShield(this, nave, batch);
+	    	  escudo.draw(batch, this, nave);
 	      } 
 	      
 	      //Colision entre balas y jugdor
@@ -128,11 +134,18 @@ public class PantallaJuego implements Screen {
 	      batch.end();
 	      
 	      //Cambio de nivel
-	      if (progress == 200) {
+	      if (progress == 20) {
 	    	  instancias.crearPaquete();
 	    	  factory = factory.nextLevel();
 	    	  progress = 0;    	  
 		  }
+	      
+	      if(score == 500) {
+	    	  nave.upgradeWeapon();
+	      }
+	      if(score == 500) {
+	    	  nave.upgradeWeapon();
+	      }
 	    	 
 	}
     

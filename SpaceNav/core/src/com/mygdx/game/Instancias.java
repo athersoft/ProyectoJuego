@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -13,7 +14,7 @@ public class Instancias {
 	private  ArrayList<paqueteAyuda> paque = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
 	private  ArrayList<Bullet> balasEnemigas = new ArrayList<>();
-	private Escudo escudo;
+	
 	
 	private static Instancias instance;
 
@@ -39,28 +40,30 @@ public class Instancias {
     	paqueteAyuda sh = new paqueteAyuda(r.nextInt((int)Gdx.graphics.getWidth()),
   	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
   	            20+r.nextInt(10), 2+r.nextInt(4), 2+r.nextInt(4), 
-  	            new Texture(Gdx.files.internal("package1.png")));
+  	            new Texture(Gdx.files.internal("package1.png")),1);
     	paque.add(sh);
     }
     
-    public Escudo createEscudo(int x, int y) {
-    	escudo = new Escudo(x, y, new Texture(Gdx.files.internal("shield.png")), 
-        		Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")));
-    	return escudo;
+    public Nave4 colNavePaq(Nave4 nave) {
+    	 for(int i = 0; i < paque.size(); i++) {
+    		paqueteAyuda p = paque.get(i);
+    		boolean a = nave.checkCollisionpack(p);
+    		if(a) {
+    			paque.remove(i);
+    			//nave.setEscudo();
+    		}	
+	     } 
+    	return nave;
     }
     
-    public void drawShield(PantallaJuego j, Nave4 nave, SpriteBatch batch) {
-    	escudo.draw(batch, j, nave);
-    }
-    
-    public int colBalaEnemigo() {
+    public int colBalaEnemigo(Sound explosionSound) {
     	int ret = 0;
     	for (int i = 0; i < balas.size(); i++) {
             Bullet b = balas.get(i);
             b.update();
             for (int j = 0; j < enemy1.size(); j++) {    
               if (b.checkCollision(enemy1.get(j))) {          
-            	 //explosionSound.play();
+            	 explosionSound.play();
             	 enemy1.get(j).reducirVida(b.getAtk());
             	 
             	 if(enemy1.get(j).isDestroyed()) {
@@ -100,9 +103,11 @@ public class Instancias {
 		            	  }
 	                }
 	    	    }else {
-	    	    	balasEnemigas.remove(i);
-  	    		i--;
-  	    		nave.changeShield();	
+	    	    	if (nave.checkCollisionBullet(b)) {
+		    	    	balasEnemigas.remove(i);
+		    	    	i--;
+		    	    	nave.changeShield();	
+	    	    	}
 	    	    } 
 	      }
     	return nave;
@@ -125,11 +130,12 @@ public class Instancias {
     	    	}else {
 	            	  if(p != null && nave.checkCollisionpack(p) && paque.isEmpty() == false) {
 	            		  paque.remove(0);
+	            		  nave.setEscudo();
 	            		  i--;
 	            	  }
                 }
     	    }else {
-    	    	if(escudo.checkCollision(b)) {
+    	    	if(nave.checkCollisionEnemy(b)) {
     	    		enemy1.remove(i);
     	    		enemy2.remove(i);
     	    		i--;
