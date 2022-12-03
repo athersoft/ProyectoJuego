@@ -27,7 +27,7 @@ public class Nivel1 implements EnemyFactory{
 			IA bb = new Enemy(Gdx.graphics.getWidth()-100+r.nextInt(140),
 		  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
 		  	            20+r.nextInt(10), -2, 2, 
-		  	            new Texture(Gdx.files.internal("min1.png")));	   
+		  	            new Texture(Gdx.files.internal("min1.png")),1);	   
 
 	  	    
 	  	  intervalo = intervaloInicial;
@@ -42,7 +42,7 @@ public class Nivel1 implements EnemyFactory{
 	}
 	
 	public EnemyFactory nextLevel() {
-		Nivel2 n = new Nivel2(10);
+		Nivel2 n = new Nivel2(15);
 		return n;
 	}
 	

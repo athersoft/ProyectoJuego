@@ -16,9 +16,10 @@ public abstract class IA {
     protected Sprite spr;
     protected boolean Destroyed = false;
     
-	public IA(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
+	public IA(int x, int y, int size, int xSpeed, int ySpeed, Texture tx, int hp) {
     	spr = new Sprite(tx);
     	this.x = x; 
+    	this.hp = hp;
  	
         //validar que borde de esfera no quede fuera
     	
@@ -88,6 +89,10 @@ public abstract class IA {
 		
 		public boolean isDestroyed() {
 			return Destroyed;
+		}
+		
+		public boolean getHit() {
+			return true;
 		}
 		
 		public abstract void mover();

@@ -11,8 +11,8 @@ public class Enemy extends IA {
 	Random r = new Random();
 	private int intervaloAtaque = 150+r.nextInt(50);
 	
-	public Enemy(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
-		super(x,y,size,xSpeed,ySpeed,tx);
+	public Enemy(int x, int y, int size, int xSpeed, int ySpeed, Texture tx, int hp) {
+		super(x,y,size,xSpeed,ySpeed,tx, hp);
 	}
 	
 	public void mover() {

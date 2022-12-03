@@ -26,6 +26,7 @@ public class Nave4 {
     private int tiempoHerido;
     private int vel = 3;
     private Arma arma;
+    private int armaLvl = 1;
     
     public Nave4(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
     	sonidoHerido = soundChoque;
@@ -94,28 +95,34 @@ public class Nave4 {
     public boolean checkCollisionEnemy(IA b) {
     	
 
-        if(!herido && b.getArea().overlaps(spr.getBoundingRectangle()) && escudo == false){
+        if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
         	// rebote
-            if (xVel ==0) xVel += b.getXSpeed()/2;
-            if (b.getXSpeed() ==0) b.setXSpeed(b.getXSpeed() + (int)xVel/2);
-            xVel = - xVel;
-            b.setXSpeed(-b.getXSpeed());
-            
-            if (yVel ==0) yVel += b.getySpeed()/2;
-            if (b.getySpeed() ==0) b.setySpeed(b.getySpeed() + (int)yVel/2);
-            yVel = - yVel;
-            b.setySpeed(- b.getySpeed());
-
-        	//actualizar vidas y herir
-            vidas--;
-            herido = true;
-  		    tiempoHerido=tiempoHeridoMax;
-  		    sonidoHerido.play();
-            if (vidas<=0) 
-          	    destruida = true; 
-            return true;
+        	if(escudo == false) {
+	            if (xVel ==0) xVel += b.getXSpeed()/2;
+	            if (b.getXSpeed() ==0) b.setXSpeed(b.getXSpeed() + (int)xVel/2);
+	            xVel = - xVel;
+	            b.setXSpeed(-b.getXSpeed());
+	            
+	            if (yVel ==0) yVel += b.getySpeed()/2;
+	            if (b.getySpeed() ==0) b.setySpeed(b.getySpeed() + (int)yVel/2);
+	            yVel = - yVel;
+	            b.setySpeed(- b.getySpeed());
+	
+	        	//actualizar vidas y herir
+	            if(b.getHit()) {
+		            vidas--;
+		            herido = true;
+		  		    tiempoHerido=tiempoHeridoMax;
+		  		    sonidoHerido.play();
+		            if (vidas<=0) 
+		          	    destruida = true; 
+		            return true;
+	            }
+        	}else {
+            	escudo = false;
+            }
         }
-        escudo = false;
+        
         return false;
     }
     
@@ -134,33 +141,17 @@ public class Nave4 {
         return false;
     }
     
+    public void setEscudo() {
+    	this.escudo = true;
+    }
     
     public boolean checkCollisionpack(paqueteAyuda b) {
     	
 
-        if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
-        	// rebote
-            if (xVel ==0) xVel += b.getXSpeed()/2;
-            if (b.getXSpeed() ==0) b.setXSpeed(b.getXSpeed() + (int)xVel/2);
-            xVel = - xVel;
-            b.setXSpeed(-b.getXSpeed());
+        if(b.getArea().overlaps(spr.getBoundingRectangle())){
             
-            if (yVel ==0) yVel += b.getySpeed()/2;
-            if (b.getySpeed() ==0) b.setySpeed(b.getySpeed() + (int)yVel/2);
-            yVel = - yVel;
-            b.setySpeed(- b.getySpeed());
-            // despegar sprites
-      /*      int cont = 0;
-            while (b.getArea().overlaps(spr.getBoundingRectangle()) && cont<xVel) {
-               spr.setX(spr.getX()+Math.signum(xVel));
-            }   */
         	//actualizar vidas y herir
             escudo = true;
-            herido = false;
-  		    tiempoHerido=tiempoHeridoMax;
-  		    sonidoHerido.play(); //Cambiar por upgrade
-            if (vidas<=0) 
-          	    destruida = false; 
             return true;
         }
         return false;
@@ -172,6 +163,16 @@ public class Nave4 {
     }
     public boolean estaHerido() {
  	   return herido;
+    }
+    
+    public void upgradeWeapon() {
+    	armaLvl++;
+    	if(armaLvl == 2) {
+    		arma = new Arma2(1);
+    	}
+    	if(armaLvl == 3) {
+    		arma = new Arma3(1);
+    	}
     }
     
     public int getVidas() {return vidas;}

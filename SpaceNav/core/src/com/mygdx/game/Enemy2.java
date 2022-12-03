@@ -7,8 +7,8 @@ public class Enemy2 extends IA{
 	private int yy = 0;
 	private int dirY = 1;
 	
-	public Enemy2(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
-		super(x,y,size,xSpeed,ySpeed,tx);
+	public Enemy2(int x, int y, int size, int xSpeed, int ySpeed, Texture tx, int hp) {
+		super(x,y,size,xSpeed,ySpeed,tx,hp);
 		Random r = new Random();
 		dirY = 1*(r.nextBoolean() ? 1 : -1 );
 
