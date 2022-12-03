@@ -134,7 +134,7 @@ public class PantallaJuego implements Screen {
 	      batch.end();
 	      
 	      //Cambio de nivel
-	      if (progress == 20) {
+	      if (progress == 200) {
 	    	  instancias.crearPaquete();
 	    	  factory = factory.nextLevel();
 	    	  progress = 0;    	  

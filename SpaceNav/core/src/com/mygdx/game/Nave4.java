@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.MathUtils;
 public class Nave4 {
 	
 	private boolean destruida = false;
-	private boolean escudo = false;
+	private boolean escudo = true;
     private int vidas = 3;
     private float xVel = 0;
     private float yVel = 0;
@@ -127,17 +127,21 @@ public class Nave4 {
     }
     
     public boolean checkCollisionBullet(Bullet b) {
-    	if(!herido && b.getArea().overlaps(spr.getBoundingRectangle()) && escudo == false){
+    	if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
         	// rebote
     		
+    		if(escudo) {
+    			escudo = false;
+    		}else {
             vidas--;
             herido = true;
   		    sonidoHerido.play();
             if (vidas<=0) 
           	    destruida = true; 
+    		}
             return true;
         }
-        escudo = false;
+        
         return false;
     }
     

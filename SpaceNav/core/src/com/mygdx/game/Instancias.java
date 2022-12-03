@@ -47,11 +47,10 @@ public class Instancias {
     public Nave4 colNavePaq(Nave4 nave) {
     	 for(int i = 0; i < paque.size(); i++) {
     		paqueteAyuda p = paque.get(i);
-    		boolean a = nave.checkCollisionpack(p);
-    		if(a) {
+    		if(nave.checkCollisionpack(p)) {
+    			nave.setEscudo();
     			paque.remove(i);
-    			//nave.setEscudo();
-    		}	
+    		}
 	     } 
     	return nave;
     }
